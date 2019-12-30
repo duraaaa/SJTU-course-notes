@@ -4,7 +4,7 @@ EM219 工程力学（荣誉）
 
 By **Prof. Xiaobing Song**, 2019-2020-Semester 1.
 
-**宋晓冰 教授** 授课，2019-2020 第一学期
+**宋晓冰 副教授** 授课，2019-2020 第一学期
 
 **Notes: all the files are in Chinese.**
 
