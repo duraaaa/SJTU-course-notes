@@ -11,6 +11,7 @@ Currently we have 目前我们有如下内容:
 - PH070 University Physics (I) (Honor) 大学物理 (1) （荣誉） by **Prof. Qitu Hu** （**胡其图 教授**）
 - CS157 the Methods of Programming (C++) (Honor) 程序设计思想与方法（C++）（荣誉） by **Teacher Gui'e Meng** （**孟桂娥 讲师**）
 - EM219 Engineering Machenics (Honor) 工程力学（荣誉） by **Prof. Xiaobing Song**（**宋晓冰 副教授**）
+- MA263 Probability and Statistics (Honor) 概率统计（荣誉） by **Prof. Dewen Xiong**（**熊德文 副教授**）
 
 
 
