@@ -13,7 +13,7 @@ Currently we have 目前我们有如下内容:
 - EM219 Engineering Machenics (Honor) 工程力学（荣誉） by **Prof. Xiaobing Song**（**宋晓冰 副教授**）
 - MA263 Probability and Statistics (Honor) 概率统计（荣誉） by **Prof. Dewen Xiong**（**熊德文 副教授**）
 
-
+- PH071 University Physics (II) (Honor) 大学物理 (2) （荣誉） by **Prof. Qitu Hu** （**胡其图 教授**）
 
 Notes: the orders above are according to the upload time of the notes.
 
