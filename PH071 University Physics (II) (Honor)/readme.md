@@ -13,6 +13,7 @@ By **Prof. Qitu Hu**, 2019-2020-Semester 1.
 Outline 大纲：
 
 - Electromagnetics 电磁学复习
+- Optics 光学复习
 
 The Outline is written and organized by myself, according to the textbook and the Prof. Hu's slides.
 
