@@ -27,8 +27,13 @@ Notes: the orders above are according to the upload time of the notes.
 
 
 
-
-
 The supplements are welcomed.
 
 欢迎补充。
+
+
+
+**How to contribute?**
+
+- Open a pull request.
+- Send e-mail to galaxies@sjtu.edu.cn
