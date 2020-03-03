@@ -12,7 +12,7 @@ By **Teacher Jingwen Leng**, 2019-2020-Semester 2.
 
 Outline 大纲：
 
-- Chap 1.1-1.3：<font color=red>newly updated!</font> The 2020/3/3 course notes.
+- Chap 1.1-1.3：<font color=red>**[newly updated!]**</font> The 2020/3/3 course notes.
 
 The Outline is written and organized by myself, according to the textbook and the Teacher Leng's slides.
 

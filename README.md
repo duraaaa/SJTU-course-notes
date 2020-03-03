@@ -14,11 +14,11 @@ Currently we have 目前我们有如下内容:
 - MA263 Probability and Statistics (Honor) 概率统计（荣誉） by **Prof. Dewen Xiong**（**熊德文 副教授**）
 - PH071 University Physics (II) (Honor) 大学物理 (2) （荣誉） by **Prof. Qitu Hu** （**胡其图 教授**）
 - TH007 Marxism Basic Principle 马克思主义基本原理概论 by **Teacher Liping Liu** （**刘立萍 讲师**）
-- <font color = red>Updating</font> EI209 Computer Organization 计算机组成 by **Teacher Jingwen Leng** （**冷静文 讲师**）
+- <font color = red>**[Updating]**</font> EI209 Computer Organization 计算机组成 by **Teacher Jingwen Leng** （**冷静文 讲师**）
 
-Notes: the orders above are according to the upload time of the notes, the <font color=red>Updating</font> tag means the course notes is currently updating.
+Notes: the orders above are according to the upload time of the notes, the <font color=red>**[Updating]**</font> tag means the course notes is currently updating.
 
-注：以上顺序按照添加顺序排序，带有 <font color=red>Updating</font> 标签的课程的笔记正在整理和更新中。
+注：以上顺序按照添加顺序排序，带有 <font color=red>**[Updating]**</font> 标签的课程的笔记正在整理和更新中。
 
 
 
