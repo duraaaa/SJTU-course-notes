@@ -15,6 +15,7 @@ Currently we have 目前我们有如下内容:
 - PH071 University Physics (II) (Honor) 大学物理 (2) （荣誉） by **Prof. Qitu Hu** （**胡其图 教授**）
 - TH007 Marxism Basic Principle 马克思主义基本原理概论 by **Teacher Liping Liu** （**刘立萍 讲师**）
 - <font color = red>**[Updating]**</font> EI209 Computer Organization 计算机组成 by **Teacher Jingwen Leng** （**冷静文 讲师**）
+- <font color = red>**[Updating]**</font> CS359 Computer Architecture (A) 计算机系统结构（A类） by **Prof. Qianni Deng** （**邓倩妮 副教授**）
 
 Notes: the orders above are according to the upload time of the notes, the <font color=red>**[Updating]**</font> tag means the course notes is currently updating.
 
