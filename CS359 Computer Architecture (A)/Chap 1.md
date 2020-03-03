@@ -98,7 +98,7 @@ The introduction of the Von Neumann Architecture can refer to notes of *EI209: C
 >
 > **Word Length of a Computer** The length of data that the controller can handle at one time.
 
-#### 1.5 The Performance of Computer
+#### 1.5  The Performance of Computer
 
 **Performance Metrics**
 
@@ -158,7 +158,7 @@ where
 >   - In fact, **CT** and **CPI** are irrelevant.
 >
 
-#### 1.6  Principles of Architecture Design.
+#### 1.6  Principles of Architecture Design
 
 **Principles of Computer Architecture**
 
