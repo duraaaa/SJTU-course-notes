@@ -1,6 +1,6 @@
-### 1  Introduction
+## 1  Introduction
 
-#### 1.1  Course Introduction
+### 1.1  Course Introduction
 
 > Computer Architecture is designing the organization and hardware to meet goals and functional requirements.   (by *Hennesy* & *Patterson*, *CAAQA 5th edition*)
 
@@ -18,11 +18,11 @@
 - Requirements are always changing.
 - Understand computer performances.
 
-#### 1.2  Technology and Trends
+### 1.2  Technology and Trends
 
-> **Moore's Law**: The number of transistors on a microchip doubles every two years, though the cost of computers is halved. (by  *Gordan Moore*, 1965)
+> **Moore's Law**（摩尔定律）: The number of transistors on a microchip doubles every two years, though the cost of computers is halved. (by  *Gordan Moore*, 1965)
 >
-> **Dennard Scaling**: As transistors get smaller, their power density stays constant. In other words, power usage of transistors stays in proportion with area or both voltage and current scale (downward) with length. (by *Robert H. Dennard*, 1974)
+> **Dennard Scaling**（登纳德缩放定律）: As transistors get smaller, their power density stays constant. In other words, power usage of transistors stays in proportion with area or both voltage and current scale (downward) with length. (by *Robert H. Dennard*, 1974)
 >
 > - The *Dennard Scaling* has expired in 2005.
 > - The *Moore's Law* still has effect currently.
@@ -46,32 +46,32 @@
 - Open source hardware: RISC-V;
 - Security.
 
-#### 1.3  The Basic Architecture of Computer
+### 1.3  The Basic Architecture of Computer
 
 **ENIAC** (1946, *UPenn*) The first computer. (<font color=blue>*no memory*</font>)
 
 **EDVAC** (1951, *UPenn*) The first computer with memory, based on *Von Neumann Architecture*.
 
-**Von Neumann Architecture**
+**Von Neumann Architecture**（冯·诺依曼体系结构）
 
 <img src='pics\John-Von-Neumann-Architecture.jpg' style="zoom:30%;" >
 
 The introduction of the Von Neumann Architecture can refer to notes of *EI209: Computer Organization*.
 
-- **Stored Program**: The programs (instructions) are in the *memory*, and the computer executes sequentially.
-- **Take memory as center**: This can free *CPU* from input/output work, enable *CPU* to do other work when outer devices communicate with *memory*.
+- **Stored Program**（存储程序）: The programs (instructions) are in the *memory*, and the computer executes sequentially.
+- **Take memory as center**（以存储器为中心）: This can free *CPU* from input/output work, enable *CPU* to do other work when outer devices communicate with *memory*.
 
-#### 1.4  The Execution of a Program
+### 1.4  The Execution of a Program
 
 **Languages in Computer**
 
-- High-level Language (*such as C, C++, etc.*)
-- Assembly Language (by *compiler*)
-- Machine Language (in binary) (by *assembler*) 
+- High-level Language（高级语言） (*such as C, C++, etc.*)
+- Assembly Language（汇编语言） (by *compiler*)
+- Machine Language（机器语言） (in binary) (by *assembler*) 
 
-**Memory capacity**: the capacity of memory. Unit: *bit, byte(B), KB, MB, GB, TB, PB*.
+**Memory capacity**（存储容量）: the capacity of memory. Unit: *bit, byte(B), KB, MB, GB, TB, PB*.
 
-**Register**
+**Register**（寄存器）
 
 - General Register: $R_0, R_1, ..., R_{n-1}$, save the intermediate result in a calculation.
 - Special Register.
@@ -80,9 +80,9 @@ The introduction of the Von Neumann Architecture can refer to notes of *EI209: C
   - **PC**: Program Counter, store the current instruction's address. When the instruction is executed, *PC* will go forward automatically to the next instruction's address.
   - **IR**: Instruction Register, store the current instruction's code.
 
-**Main Memory**: *memory*, *MAR* and *MDR*.
+**Main Memory**（主存储器）: *memory*, *MAR* and *MDR*.
 
-**Controller**: *CU*, *PC* and *IR*.
+**Controller**（控制器）: *CU*（控制单元）, *PC* and *IR*.
 
 **The Execution of an Instruction**
 
@@ -92,28 +92,28 @@ The introduction of the Von Neumann Architecture can refer to notes of *EI209: C
 
 **The Execution of a Program** execute each instruction in a certain order (usually *sequential*).
 
-> **Instruction Length**: The length of an instruction.
+> **Instruction Length**（指令字长）: The length of an instruction.
 >
-> **Storage Length**: The length of *MDR*.
+> **Storage Length**（存储字长）: The length of *MDR*.
 >
-> **Word Length of a Computer** The length of data that the controller can handle at one time.
+> **Word Length of a Computer**（机器字长）: The length of data that the controller can handle at one time.
 
-#### 1.5  The Performance of Computer
+### 1.5  The Performance of Computer
 
 **Performance Metrics**
 
-- <font color = red>**Latency**</font> (execution time, response time): time to complete a *given* task, or a *fixed* task.
+- <font color = red>**Latency**</font> （延迟）(execution time, response time)（执行时间、响应时间）: time to complete a *given* task, or a *fixed* task.
   $$
-  Performance \propto \frac{1}{Latency}
+  Performance \propto \frac{1}{Latency} = \frac{1}{Execution\ Time}
   $$
 
-- <font color = red>**Throughput**</font> (bandwidth): the rate of completion of tasks; number of tasks per unit time.
+- <font color = red>**Throughput**</font> （吞吐率）(bandwidth)（带宽）: the rate of completion of tasks; number of tasks per unit time.
   
   - Exploit parallelism for throughput, not latency. As a result, *improving bandwidth is easier than improving latency*.
 
-**Performance Speedup Ratio**
+**Performance Speedup Ratio**（性能加速比）
 $$
-R = \frac{Performance_X}{Performance_Y}
+R = \frac{Performance_X}{Performance_Y} = \frac{Execution\ Time_Y}{Execution\ Time_X}
 $$
 where, $R$ is the performance speedup ratio.
 
@@ -158,7 +158,7 @@ where
 >   - In fact, **CT** and **CPI** are irrelevant.
 >
 
-#### 1.6  Principles of Architecture Design
+### 1.6  Principles of Architecture Design
 
 **Principles of Computer Architecture**
 
@@ -167,8 +167,8 @@ where
   - Processor level: operate on multiple instructions at once (*pipelining*, *superscalar issue*)
   - Circuit level: operate on multiple bits at once (*carry-lookahead ALU*)
 - Focus on the common case. (*RISC design principle*)
-  - Common case first.
-  - *Amdahl's law*.
+  - Common case first.（大概率事件优先）
+  - *Amdahl's law*.（阿姆达尔定律）
 - Principle of locality. (*Catches*)
   - Spatial and Temporal Locality.
   - 90% of the program executing in 10% of the code.
@@ -180,12 +180,12 @@ $$
 where,
 
 - $P$ : proportion of running time affected by optimization.
-- $S$ : total speedup ratio.
-- $s$ : the speedup ratio in a part, $s = n$ in parallelization conditions.
+- $S$ : total speedup ratio.（总加速比）
+- $s$ : the speedup ratio in a part（可加速部分加速比）, $s = n$ in parallelization conditions.
 
 *Amdahl's Law* requires extremely parallel code to take advantage of large multi-processors.
 
-*Amdahl's Law* is not suitable for the quantity-extensible problem.
+*Amdahl's Law* is not suitable for *the quantity-extensible problem*（规模可扩展问题）.
 
 > **Little's Law** is a theorem that determines the average number of items in a stationary queuing system based on the average waiting time of an item within a system and the average number of items arriving at the system per unit of time. 
 > $$
