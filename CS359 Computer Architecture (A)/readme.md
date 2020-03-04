@@ -13,6 +13,7 @@ By **Prof. Qianni Deng**, 2019-2020-Semester 2.
 Outline 大纲：
 
 - Chap 1：<font color=red>**[newly updated!]**</font> The 2020/3/3 course notes.
+- Chap 2：<font color=red>**[newly updated!]**</font> The Preview notes of Chap 2, currently to Chap 2.5.
 
 The Outline is written and organized by myself, according to the textbook and the Prof. Deng's slides.
 
