@@ -120,7 +120,7 @@ Operator `&`, `|`, `^`, `~`, `<<`, `>>` in C language are bitwise operator. They
 
   - Left-shift（左移）: throw away the high digits, and filled the low digits with 0. Usually, `x << 1` has the same effect as `x * 2`. Left-shift may cause overflow and get the wrong result.
 
-  - Right-shift（右移）: throw away the low digits, and filled the high digits with 0 (logic right-shift); or throw away the low digits, and filled the high digits with the sign digit of original number. Just like digit-extension, compiler will automatically choose one of the methods. Similarly, `x >> 1` has the same effect as `x / 2`.
+  - Right-shift（右移）: throw away the low digits, and filled the high digits with 0 (logic right-shift（逻辑右移）); or throw away the low digits, and filled the high digits with the sign digit of original number (arithmetic right-shift（算术右移）). Just like digit-extension, compiler will automatically choose one of the methods. Similarly, `x >> 1` has the same effect as `x / 2`.
 
   - **Warning**: In the shift operator `x << y` or `x >> y`, if `y` is greater than the digit-length of `x`, then the C compiler / MIPS will automatically do the modulo operation in `y`.
 
@@ -141,15 +141,15 @@ Logic Operators `&&`, `||`, `!` only get the result *true* (not 0) or *false* (0
 
 Suppose the digit numbers of the operands are $w$.
 
-**Unsigned Plus Operation**
+**Unsigned Addition Operation**
 
-Unsigned plus operation is same as plus operation under modulo $2^w$, that is,
+Unsigned addition operation is same as addition operation under modulo $2^w$, that is,
 $$
 UAdd_w(u,v) = (u+v) \ mod\ 2^w
 $$
-**Signed Plus Operation**
+**Signed Addition Operation (TC)**
 
-According to the plus formula in two's complement, we still have:
+According to the addition formula in two's complement, we still have:
 $$
 TAdd_w(u,v) = (u + v)\ mod\ 2^w
 $$
@@ -165,7 +165,7 @@ $$
 
 **Serial Carry Adder**
 
-So the *plus operation* can be implemented with many **1-bit Full Adder**s（一位全加器）.
+So the *addition operation* can be implemented with many **1-bit Full Adder**s（一位全加器）.
 
 <img src='pics/one-bit-full-adder.png' style="zoom:50%;" >
 
@@ -180,27 +180,163 @@ carry_out = (A & B) | (A & carry_in) | (B & carry_in)
 
 With many *1-bit full adders* connected together, we get a **serial carry adder** (simple but slow).
 
-**Unsigned Substract Operation**
+**Unsigned Subtraction Operation**
 
-Unsigned substract operation is same as substract operation under modulo $2^w$, that is,
+Unsigned subtraction operation is same as substract operation under modulo $2^w$, that is,
 $$
 USub_w(u,v) = u - v = u - v + 2^w = u + (2^w - v) = u + \bar{v} + 1
 $$
-**Signed Substract Operation**
+**Signed Subtraction Operation (TC)**
 
-According to the plus formula in two's complement, $[A - B]_{TC} = [A + (-B)]_{TC} = [A]_{TC}+[-B]_{TC}$. And we know that $[B]_{TC} + [-B]_{TC} = 0$, so we have $[-B]_{TC} = 0 - [B]_{TC} = \overline{[B]_{TC}} + 1$.
+According to the addition formula in two's complement, $[A - B]_{TC} = [A + (-B)]_{TC} = [A]_{TC}+[-B]_{TC}$. And we know that $[B]_{TC} + [-B]_{TC} = 0$, so we have $[-B]_{TC} = 0 - [B]_{TC} = \overline{[B]_{TC}} + 1$.
 $$
 TSub_w(u,v) = u-v = u + \bar{v} + 1
 $$
 **Arithmetic/Logic Unit**
 
-Thus, we can design a *serial carry adder/subber* （串行加减法器） in the following structure.
+Thus, we can design a *serial carry adder-subtracter* （串行加减法器） in the following structure.
 
-When doing plus operation, the signal `add/sub` is `0`; when doing substract operation, the signal is `1`.
+When doing addition operation, the signal `add/sub` is `0`; when doing subtraction operation, the signal is `1`.
 
 <img src='pics/serial-adder-suber.png' style="zoom:75%;" >
 
-We use xor gate to implement the bitwise NOT operation in the substraction.
+We use a *xor-gate* to implement the bitwise NOT operation in the subtraction.
 
-This unit can also do other logic/arithmetic things, so we call it **ALU** (a.k.a. **Arithmetic/Logic Unit**).
+This unit can also do other logic/arithmetic things, so we call it **ALU** (**Arithmetic/Logic Unit**).
+
+### 2.6  Overflow
+
+**Overflow**: the result of operation is out of the range of number.
+
+Two number with the opposite sign in addition operation or two number with the same sign in subtraction operation **CAN NOT** cause *overflow*. Only two number with the same sign in addition operation or two number with the opposite sign in subtraction operation **MAY** cause *overflow*.
+
+| Operation | Operand A | Operand B  | Overflow Result |
+| --------- | --------- | ---------- | --------------- |
+| C = A + B | $A\geq 0$ | $B\geq 0$  | $C < 0$         |
+| C = A + B | $A<0$     | $B<0$      | $C\geq 0$       |
+| C = A - B | $A\geq 0$ | $B < 0$    | $C < 0$         |
+| C = A - B | $A < 0$   | $B \geq 0$ | $C \geq 0$      |
+
+**How to check if overflow happens?**
+
+- Check the sign digit: suppose the highest digit number is 31 ($n = 32$).
+
+  <img src='pics/overflow-check-1.png'>
+
+  ```c++
+  Overflow_Sign = (A31 & B31 & (~ S31)) | ((~ A31) & (~ B31) & S31);
+  Overflow_Sign = (A(n-1) & B(n-1) & ~ (S(n-1))) | (~ (A(n-1)) & ~ (B(n-1)) & C(n-1));
+  ```
+
+- Check the carry of the highest digit $c_{n-1}$ and the carry of the second-highest digit $c_n$.
+
+  - If $c_{n-1} = c_n$, then **NO** overflow.
+  - If $c_{n-1} \ne c_n$, then **OVERFLOW**.
+
+  $c_{n-1}$ is the carry_in of $(n-1)$ digit and  $c_n$ is the carry_out of $(n-1)$ digit. 
+
+  P.S: We count the digit from 0 to $(n-1)$.
+
+  So we can add a *xor-gate* between carry_in and carry_out of the digit $(n-1)$, that is,
+
+  ```
+  Overflow_Sign = carry_in(n-1) ^ carry_out(n-1);
+  ```
+
+- Double sign-digit. Extend the sign digit to 2 digits, and use `00` to represent positive and `11` to represent negative. Then if the result's sign digits are `01` or `10`, overflow happens.
+
+### 2.7  The * Operator
+
+**Multiplication Operation with Signed magnitude **
+
+When consider only one digit, we can use an *and-gate* to get the answer simply, so we can use *ALU* and *and-gate* to implement the multiplication operation.
+
+> We can also design a more specific circuit to finish the task.
+>
+> - If the last digit of R1 is 0, do nothing (R0 plus 0)
+> - If the last digit of R1 is 1, then set R0 to R0 plus R2.
+>
+> After addition operation end, do the *right-shift* to R0 and R1.
+>
+> **NOTE**: when doing *right-shift*, treat R0 and R1 as a total!
+>
+> <img src='pics/multiply-1.png'>
+
+With the method above, we can design a circuit to do 32-bit multiplication operation of signed magnitude.
+
+<img src='pics/multiply-2.png' style="zoom:80%;" >
+
+**NOTE**: the sign digit is **NOT** involved in the calculation above!
+
+**Multiplication Operation with Two's Complement**: <font color=red>**Booth Algorithm**</font>
+
+With the method above, we use the last two digit of R1 to control the operation:
+
+- If the last two digit of R1 $y_{i+1}y_i$ is 00 or 11, do nothing.
+- If the last two digit of R1 $y_{i+1}y_i$ is 01, then set R0 to R0 plus R2.
+- If the last two digit of R1 $y_{i+1}y_i$ is 10, then set R0 to R0 minus R2.
+
+We can use the same structure above to complete the multiplication operation.
+
+<img src = 'pics/multiply-3.png' style="zoom:80%;" >
+
+> **Correctness Proof**
+>
+> Suppose $[x]_{TC}=x_n x_{n-1} ... x_1x_0, [y]_{TC}=y_n y_{n-1} ... y_1y_0 $, then
+> $$
+> result = (0 - y_0)x\times 2^0 + (y_0 - y_1)x \times 2^1 + (y_1 - y_2)x\times 2^2 + ... +(y_{30} - y_{31})x \times 2^{31}
+> $$
+> So,
+> $$
+> result = x(-y_{31}\times 2^{31} + y_{30}\times 2^{30}+y_{29} \times 2^{29} + ... + y_0 \times 2^0)
+> $$
+> $y_{31}$ is the sign digit of $y$, so whether $y$ is positive or negative, we have:
+> $$
+> y = (-y_{31}\times 2^{31} + y_{30}\times 2^{30}+y_{29} \times 2^{29} + ... + y_0 \times 2^0)
+> $$
+> As a result, $result = xy$, the algorithm is correct!
+
+Suppose the digit numbers of the operands are $w$.
+
+**Unsigned Multiplication Operation**
+
+Unsigned multiplication operation is same as multiplication operation under modulo $2^w$, that is,
+$$
+UMult_w(u,v) = (u\cdot v)\ mod\ 2^w
+$$
+**Signed Multiplication Operation (TC)**
+
+We can find that the formula still works:
+$$
+Tmult_w(u,v) = (u \cdot v)\ mod \ 2^w
+$$
+**Compiler Optimization in Multiplication Operation**
+
+Use `<<` or `>>` and `+` or `-` to optimize:
+
+> [*Example*] The following code can be optimized.
+>
+> ```C++
+> long mul12(long x) {
+> 	return x * 12;
+> }
+> ```
+>
+> After compiling with optimization, we can get:
+>
+> ```assembly
+> leaq (%rax, %rax, 2), %rax
+> salq $2, %rax
+> ```
+>
+> which means:
+>
+> ```c++
+> t = x + x * 2;
+> return (t << 2);
+> ```
+
+**Overflow**
+
+The multiplication operation usually **DO NOT** have an overflow-check feature, and the compiler **MAY NOT** check the overflow problem of multiplying.
 
