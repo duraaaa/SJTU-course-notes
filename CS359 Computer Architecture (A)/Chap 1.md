@@ -1,6 +1,6 @@
 ## 1  Introduction
 
-### 1.1  Course Introduction
+### 1.0  Course Introduction
 
 > Computer Architecture is designing the organization and hardware to meet goals and functional requirements.   (by *Hennesy* & *Patterson*, *CAAQA 5th edition*)
 
@@ -18,7 +18,7 @@
 - Requirements are always changing.
 - Understand computer performances.
 
-### 1.2  Technology and Trends
+### 1.1  Technology and Trends
 
 > **Moore's Law**（摩尔定律）: The number of transistors on a microchip doubles every two years, though the cost of computers is halved. (by  *Gordan Moore*, 1965)
 >
@@ -46,7 +46,7 @@
 - Open source hardware: RISC-V;
 - Security.
 
-### 1.3  The Basic Architecture of Computer
+### 1.2  The Basic Architecture of Computer
 
 **ENIAC** (1946, *UPenn*) The first computer. (<font color=blue>*no memory*</font>)
 
@@ -61,7 +61,7 @@ The introduction of the Von Neumann Architecture can refer to notes of *EI209: C
 - **Stored Program**（存储程序）: The programs (instructions) are in the *memory*, and the computer executes sequentially.
 - **Take memory as center**（以存储器为中心）: This can free *CPU* from input/output work, enable *CPU* to do other work when outer devices communicate with *memory*.
 
-### 1.4  The Execution of a Program
+### 1.3  The Execution of a Program
 
 **Languages in Computer**
 
@@ -98,7 +98,7 @@ The introduction of the Von Neumann Architecture can refer to notes of *EI209: C
 >
 > **Word Length of a Computer**（机器字长）: The length of data that the controller can handle at one time.
 
-### 1.5  The Performance of Computer
+### 1.4  The Performance of Computer
 
 **Performance Metrics**
 
@@ -158,7 +158,7 @@ where
 >   - In fact, **CT** and **CPI** are irrelevant.
 >
 
-### 1.6  Principles of Architecture Design
+### 1.5  Principles of Architecture Design
 
 **Principles of Computer Architecture**
 

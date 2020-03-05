@@ -1,5 +1,20 @@
 ## 2  Representation of Integer
 
+### 2.0 Why binary?
+
+Scales: **Binary**（二进制）, **Octal**（八进制）, **Decimal**（十进制）, **Hexadecimal**（十六进制）.
+
+Given a number $N$, we can use R-scale to represent it, that will cost $\log_R{N}$ digits.  The basic number of R-scale ($0,1,...,R-1$) should be represent in different ways, so each digit should cost $R$ space, then the total space cost $D$ can be represented as：
+$$
+D = R \log_R{N} = \ln{N} \frac{R}{\ln{R}}\\
+\frac{\partial{D}}{\partial{R}} = \ln{N} \cdot \frac{\ln{R}-1}{(\ln{R})^2}
+$$
+When $R = e = 2.71828...$, $\frac{\partial{D}}{\partial{R}}=0$, which means $D$ reaches its minimum.
+
+Since $R \in \mathbb{N}$, we can get the optimal solution: $R=2$ or $R=3$.
+
+Binary is more convenient for circuit design than ternary, so we choose binary to represent data in computer.
+
 ### 2.1  Encoding of Integer
 
 $$
@@ -34,7 +49,18 @@ $$
     **The two's complement** has the same effect as *mod $2^{n+1}$*.
 
   - As a result, the number 0 only has one code $000...00$.
-  - $[X + Y]_{OC} = [X]_{OC} + [Y]_{OC}$
+  
+  - How to write a negative number in two's complement?
+  
+    - From the lowest digit of its absolute number's binary code, when we encounter `0` and the first `1`, we do not change their digits; then we change the digits after the first `1` to their opposite numbers (`0` to `1`, `1` to `0`). （从其绝对值的二进制编码的最低位开始，遇到的0和第一个1不变，之后的所有数取反。）
+  
+  - **CAN NOT** compare two numbers in two's complement directly.
+  
+  - $[X]_{TC} + [-X]_{TC} = 2^{n+1}=[0]_{TC}$
+  
+  - $[X + Y]_{TC} = [X]_{TC} + [Y]_{TC}$
+  
+    $[X - Y]_{TC} = [X]_{TC} + [-Y]_{TC}$
 
 > [*Example*] (different encoding methods in computer) 
 > $$
@@ -93,12 +119,12 @@ Operator `&`, `|`, `^`, `~`, `<<`, `>>` in C language are bitwise operator. They
 
 - Digit-extension（位扩展）: the C programming language will do it automatically, after the extension, the number **WILL NOT** change.
 
-  - 0-extension（0扩展）: the transformation of unsigned numbers, all the extension digit will be filled with 0.
-  - signed-extension（带符号扩展）: the transformation of signed numbers, all the extension digit will be filled with the sign digit of the original number.
+  - 0-extension（0扩展）: the transformation of *unsigned* numbers, all the extension digit will be filled with 0.
+  - signed-extension（带符号扩展）: the transformation of *signed* numbers, all the extension digit will be filled with the sign digit of the original number.
 
   > [*Example*]
   >
-  >  `(unsigned short)111...11 = (unsigned int)000..00111...11` 
+  >  `(unsigned short)111...11 = (int)000..00111...11` 
   >
   >  `(short)011...11 = (int)000...00011...11`
   >
@@ -120,10 +146,16 @@ Operator `&`, `|`, `^`, `~`, `<<`, `>>` in C language are bitwise operator. They
 
   - Left-shift（左移）: throw away the high digits, and filled the low digits with 0. Usually, `x << 1` has the same effect as `x * 2`. Left-shift may cause overflow and get the wrong result.
 
-  - Right-shift（右移）: throw away the low digits, and filled the high digits with 0 (logic right-shift（逻辑右移）); or throw away the low digits, and filled the high digits with the sign digit of original number (arithmetic right-shift（算术右移）). Just like digit-extension, compiler will automatically choose one of the methods. Similarly, `x >> 1` has the same effect as `x / 2`.
+  - Right-shift（右移）: throw away the low digits, and filled the high digits with 0 (logic right-shift（逻辑右移）); or throw away the low digits, and filled the high digits with the sign digit of original number (arithmetic right-shift（算术右移）). Just like digit-extension, compiler will automatically choose one of the methods. Similarly, `x >> 1` has the same effect as `x / 2` usually.
 
+    > [*Example*] 
+  >
+    > `x >> y` get the result $\lfloor x / 2^y \rfloor$, so if `x` is negative, we may get unexpected result (because the result is not zero-correction（向零取整）), that is, the result is different from `x / (1 << y)`.
+    >
+    > Let's say `y = 2`, when `x` is negative, the result of `x >> 2` may be different from `x / 4`. 
+  
   - **Warning**: In the shift operator `x << y` or `x >> y`, if `y` is greater than the digit-length of `x`, then the C compiler / MIPS will automatically do the modulo operation in `y`.
-
+  
     > [*Example*] If the `x` has 32 digits, the result will be `x >> (y%32)`.
 
 ### 2.4  Logic Operators
@@ -203,6 +235,37 @@ When doing addition operation, the signal `add/sub` is `0`; when doing subtracti
 We use a *xor-gate* to implement the bitwise NOT operation in the subtraction.
 
 This unit can also do other logic/arithmetic things, so we call it **ALU** (**Arithmetic/Logic Unit**).
+
+> **Carry Lookahead Adder**
+>
+> We summarize the carry signals, then we get:
+>
+> ```c++
+> c1 = (x0 & c0) | (y0 & c0) | (x0 & y0);
+> // c2 = (x1 & c1) | (y1 & c1) | (x1 & y1);
+> c2 = (x1 & x0 & y0) | (x1 & x0 & c0) | (x1 & y0 & c0) |
+>      (y1 & x0 & y0) | (y1 & y0 & c0) | (y1 & x0 & c0) | (x1 & y1);
+> // ...
+> ```
+>
+> We can use some notations to make the formulas simpler.
+> $$
+> g_i \stackrel{\Delta}{=} x_i\ \mathscr{and}\ y_i \\
+> p_i \stackrel{\Delta}{=} x_i\ \mathscr{or}\ y_i
+> $$
+> then we have:
+>
+> ```c++
+> c1 = g0 | (p0 & c0);
+> c2 = g1 | (p1 & g0) | (p1 & p0 & c0);
+> c3 = g2 | (p2 & g1) | (p2 & p1 & g0) | (p2 & p1 & p0 & c0);
+> c4 = g3 | (p3 & g2) | (p3 & p2 & g1) | (p3 & p2 & p1 & g0) |
+>      (p3 & p2 & p1 & p0 & c0);
+> ```
+>
+> With the formulas above, we can calculate carry of 4 digits in one special unit, which speed up the process of calculation. We call it **Carry Lookahead Adder** (**CLA**).
+>
+> <img src='pics/CLA.png'>
 
 ### 2.6  Overflow
 
@@ -335,6 +398,10 @@ Use `<<` or `>>` and `+` or `-` to optimize:
 > t = x + x * 2;
 > return (t << 2);
 > ```
+
+> [*Example*]  When the compiler optimize division operation, a correct term may be added.
+>
+> We have mentioned before that the result of `x >> y` and `x / (1 << y)` may be different. The compiler will automatically optimize the code `x / (1 << y)` as `(x + (1 << y) - 1) >> y`, that is, $\lfloor (x + (2^y - 1))/2^y\rfloor$, then the two results are the same.
 
 **Overflow**
 
